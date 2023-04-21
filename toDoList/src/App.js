@@ -11,16 +11,29 @@ function App() {
 			const task = {
 				id: todoList.length === 0 ? 1 : todoList[todoList.length - 1].id + 1,
 				taskName: newTask,
+        		isCompleted: false
 			};
 			setTodoList([...todoList, task]);
 		} else
 			{
 				alert('please type something');
-        setTodoList([...todoList]);
+        		setTodoList([...todoList]);
 			}
 	};
 	const handleChnage = (event) => {
 		setNewTask(event.target.value);
+	};
+	const markAsDone = (id) => {
+		setTodoList(
+			todoList.map((task) => {
+				if (task.id === id ){
+					console.log(task.isCompleted);
+					return {...task, isCompleted: true};
+				}else {
+					 return task;
+				}
+			})
+		)
 	};
 
 	const deleteTask = (id) => {
@@ -42,7 +55,7 @@ function App() {
 
 			<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
 				{todoList.map((task) => {
-					return <Task deleteTask={deleteTask} taskName={task.taskName} id={task.id} />;
+					return <Task isCompleted={todoList.isCompleted} markAsDone={markAsDone} deleteTask={deleteTask} taskName={task.taskName} id={task.id} />;
 				})}
 			</div>
 		</div>
